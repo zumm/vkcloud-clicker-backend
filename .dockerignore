@@ -9,3 +9,4 @@ tests
 .gitinore
 .env
 .env.*
+*.7z
