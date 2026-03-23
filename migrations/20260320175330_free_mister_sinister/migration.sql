@@ -1,0 +1,1 @@
+ALTER TABLE "settigns" RENAME TO "settings";

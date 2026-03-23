@@ -1,0 +1,39 @@
+insert into
+  "settings" ("campaign_state")
+values
+  ('LIVE');
+
+insert into
+  "gifts" ("name", "target", "url", "image_url")
+values
+  ('256 Гб на 1 месяц', 100, '#', '/gifts/1.webp'),
+  ('512 Гб на 1 месяц', 500, '#', '/gifts/2.webp'),
+  ('1 Тб на 3 месяца', 1000, '#', '/gifts/3.webp');
+
+insert into
+  "jackpots" ("name", "image_url")
+values
+  ('1 Тб на 1 год', '/gifts/jackpot.webp');
+
+insert into
+  "promocodes" ("code")
+values
+  ('Тестовый промокод 1'),
+  ('Тестовый промокод 2'),
+  ('Тестовый промокод 3');
+
+insert into
+  "boosters" ("id", "name", "type", "duration", "value")
+overriding system value
+values
+  (1, 'Скорость x2', 'CLICK_MULTIPLIER', '30s', 1);
+
+insert into
+  "milestones" ("target", "booster_id")
+values
+  (50, 1),
+  (200, 1),
+  (400, 1),
+  (600, 1),
+  (750, 1),
+  (900, 1);
