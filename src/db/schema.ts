@@ -55,8 +55,9 @@ export const ledger = pgTable('ledger', {
 
 // TODO: add no overlapping constraint when it will be possible in drizzle
 // https://github.com/drizzle-team/drizzle-orm/issues/4939
-// atm this constraint is added by custom migration
-// ALTER TABLE "click_sessions" ADD CONSTRAINT "click_sessions_no_overlapping" EXCLUDE USING GIST (tstzrange("started_at", "ended_at", '[)') WITH &&);
+// atm this constraint is added by custom migration:
+// CREATE EXTENSION IF NOT EXISTS "btree_gist";
+// ALTER TABLE "click_sessions" ADD CONSTRAINT "click_sessions_no_overlapping" EXCLUDE USING GIST ("user_id" WITH =, tstzrange("started_at", "ended_at", '[)') WITH &&);
 export const clickSessions = pgTable('click_sessions', {
   id: id(),
   userId: bigintjs()
