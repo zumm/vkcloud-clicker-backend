@@ -51,7 +51,11 @@ export class BotModule implements NestModule {
       this.envService.get('API_URL'),
     ).toString()
 
-    await this.bot.api.setWebhook(webhookUrl)
+    try {
+      await this.bot.api.setWebhook(webhookUrl)
+    } catch (error) {
+      this.logger.error('Unnable to set bot webhook', { error })
+    }
 
     consumer
       .apply(webhookCallback(this.bot, 'express'))

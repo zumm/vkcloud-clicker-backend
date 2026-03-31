@@ -76,7 +76,7 @@ export class ClickerService {
 
     this.logger.info(
       'Click session #{sessionId} from user #{userId} processed',
-      { userId, sessionId, session, reward },
+      { userId, sessionId, session, balance, reward },
     )
 
     return { reward, balance, isMilestoneReached }

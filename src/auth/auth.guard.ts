@@ -5,7 +5,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
+import { JwtService, TokenExpiredError } from '@nestjs/jwt'
 import type { Request } from 'express'
 import { JwtPayload } from './interfaces'
 
@@ -32,7 +32,10 @@ export class AuthGuard implements CanActivate {
         jwtPayload,
       })
     } catch (error) {
-      this.logger.warn('Cannot verify jwt', { token, error })
+      if (!(error instanceof TokenExpiredError)) {
+        this.logger.warn('Cannot verify jwt', { token, error })
+      }
+
       throw new UnauthorizedException()
     }
 
