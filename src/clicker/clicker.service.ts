@@ -52,8 +52,12 @@ export class ClickerService {
 
     const boostersSummary = await this.boostersService.getUserBoostersSummary(
       userId,
-      session.startedAt,
-      session.endedAt,
+      new Date(
+        session.startedAt.valueOf() + this.envService.get('MAX_CLOCK_SKEW_MS'),
+      ),
+      new Date(
+        session.endedAt.valueOf() - this.envService.get('MAX_CLOCK_SKEW_MS'),
+      ),
     )
 
     const clickPower = this.boostersService.calculateClickPower(boostersSummary)
