@@ -3,6 +3,7 @@ import {
   getConsoleSink,
   getLogger,
   jsonLinesFormatter,
+  type LogLevel,
 } from '@logtape/logtape'
 import { getPrettyFormatter } from '@logtape/pretty'
 import { getSentrySink } from '@logtape/sentry'
@@ -43,9 +44,13 @@ export class LogTapeLogger implements LoggerService {
   }
 }
 
-export const bootstrapLogtape = (format: 'pretty' | 'json') => {
+export const bootstrapLogtape = (options: {
+  format: 'pretty' | 'json'
+  logLevel: LogLevel
+  sentryLogLevel?: LogLevel
+}) => {
   const formatter =
-    format === 'json'
+    options.format === 'json'
       ? jsonLinesFormatter
       : getPrettyFormatter({
           timestamp: 'time',
@@ -60,8 +65,12 @@ export const bootstrapLogtape = (format: 'pretty' | 'json') => {
       }),
     },
     loggers: [
-      { category: ['app'], sinks: ['console'], lowestLevel: 'debug' },
-      { category: [], sinks: ['sentry'], lowestLevel: 'info' },
+      { category: ['app'], sinks: ['console'], lowestLevel: options.logLevel },
+      {
+        category: [],
+        sinks: ['sentry'],
+        lowestLevel: options.logLevel ?? options.sentryLogLevel,
+      },
     ],
   })
 }

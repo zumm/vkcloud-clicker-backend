@@ -23,6 +23,15 @@ const array = <Schema extends z.core.SomeType>(schema: Schema) =>
     return value
   }, schema)
 
+const LOG_LEVELS = [
+  'trace',
+  'debug',
+  'info',
+  'warning',
+  'error',
+  'fatal',
+] as const
+
 export const envSchema = z.object({
   PORT: number(z.int().nonnegative().max(65536).default(3000)),
   SWAGGER_ENABLED: z.stringbool().default(false),
@@ -32,7 +41,10 @@ export const envSchema = z.object({
       .positive()
       .default(MINUTE * 1000),
   ),
+
   LOGGER_FORMAT: z.enum(['pretty', 'json']).default('json'),
+  LOGGER_LOG_LEVEL: z.enum(LOG_LEVELS).default('info'),
+  LOGGER_SENTRY_LOG_LEVEL: z.enum(LOG_LEVELS).optional(),
 
   AUTH_JWT_SECRET: z.string().min(1),
   AUTH_ACCESS_TOKEN_TTL: number(z.int().positive().default(MINUTE)),

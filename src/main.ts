@@ -14,7 +14,12 @@ async function bootstrap() {
 
   const envService = app.get(EnvService)
 
-  await bootstrapLogtape(envService.get('LOGGER_FORMAT'))
+  await bootstrapLogtape({
+    format: envService.get('LOGGER_FORMAT'),
+    logLevel: envService.get('LOGGER_LOG_LEVEL'),
+    sentryLogLevel: envService.get('LOGGER_SENTRY_LOG_LEVEL'),
+  })
+
   const nestLogger = new LogTapeLogger()
   app.useLogger(nestLogger)
 
