@@ -9,13 +9,6 @@ import { EnvService } from 'src/env/env.service'
 import { type Bot, InjectBot } from './bot.provider'
 import type { TgPushQueue } from './interfaces'
 
-const getStartMessage = () => `Жми «Играть» ⚡️
-И погнали прокачивать память ☁️
-`
-
-const getWinMessage = (code: string) =>
-  `<Тут должен быть какой-то текст о том что ты выиграл промокод "${code}">`
-
 // TODO: reimplement using decorators
 export class BotUpdate {
   private readonly logger = getLogger(['app', BotUpdate.name])
@@ -81,7 +74,9 @@ export class BotUpdate {
       this.envService.get('APP_URL'),
     )
 
-    return context.reply(getStartMessage(), {
+    const { botTemplateStart } = await this.adminService.getSettings()
+
+    return context.reply(botTemplateStart, {
       reply_markup: keyboard,
     })
   }
@@ -101,6 +96,8 @@ export class BotUpdate {
   }
 
   private async onRaffle(context: Context) {
+    const { botTemplateJackpot } = await this.adminService.getSettings()
+
     const { promocodesLeft, result } =
       await this.adminService.rafflePromocodes()
 
@@ -127,7 +124,7 @@ export class BotUpdate {
       name: 'message' as const,
       data: {
         chatId: user.telegramId,
-        message: getWinMessage(code),
+        message: botTemplateJackpot.replaceAll('{{code}}', code),
       },
     }))
     await this.tgPushQueue.addBulk(jobs)

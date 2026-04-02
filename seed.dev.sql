@@ -1,7 +1,11 @@
 insert into
-  "settings" ("campaign_state")
+  "settings" ("campaign_state", "bot_template_start", "bot_template_jackpot")
 values
-  ('LIVE');
+  (
+    'LIVE',
+    E'<Тут должен быть какой-то текст о начале игры>',
+    E'<Тут должен быть какой-то текст о том что ты выиграл промокод "{{code}}">'
+  );
 
 insert into
   "gifts" ("name", "target", "url", "image_url")

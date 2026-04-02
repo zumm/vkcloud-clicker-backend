@@ -20,6 +20,8 @@ export const campaignState = pgEnum('campaign_state', ['LIVE', 'OVER'])
 export const settings = pgTable('settings', {
   campaignState: campaignState().notNull().default('LIVE'),
   botAdminIds: jsonb().notNull().default([]),
+  botTemplateStart: text().notNull().default(''),
+  botTemplateJackpot: text().notNull().default(''),
 })
 
 export const users = pgTable('users', {
