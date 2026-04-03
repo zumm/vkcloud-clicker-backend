@@ -17,7 +17,7 @@ values
 insert into
   "jackpots" ("name", "image_url")
 values
-  ('1 ГБ на 1 год', '/gifts/jackpot.webp');
+  ('1 ТБ на 1 год', '/gifts/jackpot.webp');
 
 insert into
   "promocodes" ("code")
