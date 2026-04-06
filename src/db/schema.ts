@@ -102,6 +102,8 @@ export const userBoosters = pgTable(
   (table) => [index().on(table.userId, table.activatedAt, table.expiresAt)],
 )
 
+export const legalTextVariant = pgEnum('legal_text_variant', ['SHORT', 'LONG'])
+
 export const gifts = pgTable(
   'gifts',
   {
@@ -110,6 +112,7 @@ export const gifts = pgTable(
     url: text().notNull(),
     imageUrl: text(),
     target: bigintjs().notNull(),
+    legalTextVariant: legalTextVariant().notNull().default('SHORT'),
     createdAt: tstz().notNull().defaultNow(),
   },
   (table) => [index().on(table.target.asc())],

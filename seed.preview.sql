@@ -8,11 +8,11 @@ values
   );
 
 insert into
-  "gifts" ("name", "target", "url", "image_url")
+  "gifts" ("name", "target", "url", "image_url", "legal_text_variant")
 values
-  ('256 ГБ на 1 месяц', 250, '#', '/gifts/1.webp'),
-  ('512 ГБ на 1 месяц', 1050, '#', '/gifts/2.webp'),
-  ('1 ТБ на 3 месяца', 2250, '#', '/gifts/3.webp');
+  ('256 ГБ на 1 месяц', 250, '#', '/gifts/1.webp', 'SHORT'),
+  ('512 ГБ на 1 месяц', 1050, '#', '/gifts/2.webp', 'SHORT'),
+  ('1 ТБ на 3 месяца', 2250, '#', '/gifts/3.webp', 'LONG');
 
 insert into
   "jackpots" ("name", "image_url")
